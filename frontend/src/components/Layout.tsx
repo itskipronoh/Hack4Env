@@ -32,9 +32,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: MapPin },
-    { name: 'Forest Monitor', href: '/forest', icon: TreePine },
-    { name: 'Biodiversity', href: '/biodiversity', icon: Bird },
-    { name: 'Climate Alerts', href: '/climate', icon: CloudRain },
+    { name: 'Hyperlocal Insights', href: '/forest', icon: Leaf },
+    { name: 'Climate Intelligence', href: '/climate', icon: TreePine },
+    { name: 'Biodiversity Watch', href: '/biodiversity', icon: Bird },
+    { name: 'Pollution & Waste', href: '/pollution', icon: CloudRain },
     { name: 'EcoSentinelAI Chat', href: '/ecoai', icon: Brain },
     isSignedIn ? { name: 'My Inbox', href: '/my-inbox', icon: MessageCircle } : null,
     // { name: 'My Inbox', href: '/my-inbox', icon: MessageCircle },
