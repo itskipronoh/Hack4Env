@@ -60,7 +60,7 @@ const EcoAI: React.FC = () => {
     const welcomeMessage: Message = {
       id: Date.now().toString(),
       role: 'assistant',
-      content: `🌍 Welcome to EcoAI! I'm your environmental data assistant powered by advanced AI.
+      content: `🌍 Welcome to EcoSentinelAI! I'm your environmental data assistant powered by advanced AI.
 
 I can help you understand:
 • 🌲 Forest coverage trends and deforestation patterns
@@ -863,7 +863,7 @@ COMPREHENSIVE DATA SUMMARY:
     console.log('📈 Complete Data Context for AI:');
     console.log(dataContext);
 
-    const finalPrompt = `You are EcoAI, an advanced environmental data analyst and climate science expert. You have access to comprehensive real-time environmental monitoring data from the world's leading environmental organizations and scientific institutions.
+    const finalPrompt = `You are EcoSentinelAI, an advanced environmental data analyst and climate science expert. You have access to comprehensive real-time environmental monitoring data from the world's leading environmental organizations and scientific institutions.
 
 COMPREHENSIVE REAL-TIME ENVIRONMENTAL DATA:
 ${dataContext}
@@ -932,7 +932,7 @@ Respond as an expert environmental scientist with access to the world's most com
               <Brain className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">EcoAI Assistant</h1>
+              <h1 className="text-xl font-bold text-white">EcoSentinelAI Assistant</h1>
               <p className="text-sm text-slate-400">
                 AI-powered environmental data analysis
                 {environmentalData && (
@@ -1001,7 +1001,7 @@ Respond as an expert environmental scientist with access to the world's most com
                 {message.isLoading ? (
                   <div className="flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin text-purple-400" />
-                    <span className="text-slate-400">EcoAI is thinking...</span>
+                    <span className="text-slate-400">EcoSentinelAI is thinking...</span>
                   </div>
                 ) : (
                   <>

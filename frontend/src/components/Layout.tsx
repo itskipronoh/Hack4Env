@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: 'Forest Monitor', href: '/forest', icon: TreePine },
     { name: 'Biodiversity', href: '/biodiversity', icon: Bird },
     { name: 'Climate Alerts', href: '/climate', icon: CloudRain },
-    { name: 'EcoAI Chat', href: '/ecoai', icon: Brain },
+    { name: 'EcoSentinelAI Chat', href: '/ecoai', icon: Brain },
     isSignedIn ? { name: 'My Inbox', href: '/my-inbox', icon: MessageCircle } : null,
     // { name: 'My Inbox', href: '/my-inbox', icon: MessageCircle },
   ].filter(Boolean);
@@ -61,7 +61,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Leaf className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">EcoSphere</h1>
+              <h1 className="text-xl font-bold text-white">EcoSentinel</h1>
               <p className="text-xs text-slate-400">Climate & Land Action</p>
             </div>
           </div>
