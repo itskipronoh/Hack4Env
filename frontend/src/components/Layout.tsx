@@ -16,6 +16,7 @@ import {
     Brain,
   MessageCircle
 } from 'lucide-react';
+
 import { SignInButton, SignOutButton, UserButton, useUser } from '@clerk/clerk-react';
 
 interface LayoutProps {

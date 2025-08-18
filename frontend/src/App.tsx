@@ -7,7 +7,7 @@ import BiodiversityTracker from './components/BiodiversityTracker';
 // import CarbonCalculator from './components/CarbonCalculator'; // Component not found
 import ClimateAlerts from './components/ClimateAlerts';
 import EcoAI from './components/EcoAI';
-
+import Pollution from './components/Pollution';
 import ChatPage from './components/Chat/ChatPage';
 // import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 
@@ -22,6 +22,7 @@ function App() {
           <Route path="/forest" element={<ForestMonitor />} />
           <Route path="/biodiversity" element={<BiodiversityTracker />} />
           <Route path="/climate" element={<ClimateAlerts />} />
+           <Route path="/pollution" element={<Pollution />} /> {/* Add this route */}
           <Route path="/ecoai" element={<EcoAI />} />
             <Route path="/my-inbox" element={<ChatPage/>} />
         </Routes>

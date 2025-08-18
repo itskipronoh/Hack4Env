@@ -243,10 +243,10 @@ export const getForestCoverageData = async (
     // Use different base coverage values for different regions
     let baseCoverage = 55.0;
     switch (region) {
-      case 'amazon': baseCoverage = 82.0; break;
-      case 'congo': baseCoverage = 67.9; break;
+      case 'Mau': baseCoverage = 82.0; break;
+      case 'Tsavo': baseCoverage = 67.9; break;
       case 'boreal': baseCoverage = 75.0; break;
-      case 'southeast': baseCoverage = 50.2; break;
+      case 'Aberdare': baseCoverage = 50.2; break;
       case 'atlantic': baseCoverage = 45.2; break;
       default: baseCoverage = 55.0; break;
     }
