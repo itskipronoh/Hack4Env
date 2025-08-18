@@ -164,7 +164,7 @@ const Dashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">🇰🇪 EcoSentinel: Kenya Triple Crisis Intelligence</h1>
+          <h1 className="text-3xl font-bold text-white"> EcoSentinel: Kenya Triple Crisis Intelligence</h1>
           <p className="text-slate-400 mt-1">
             Tackling <span className="text-emerald-400 font-bold">Climate Change</span>, <span className="text-blue-400 font-bold">Biodiversity Loss</span>, and <span className="text-yellow-400 font-bold">Pollution & Waste</span> with real-time, hyperlocal insights for local decision-makers.
           </p>
