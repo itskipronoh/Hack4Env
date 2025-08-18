@@ -18,6 +18,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } fro
 import LeafletMap from './Map/LeafletMap';
 import { getForestCoverageData, getRegionalForestData } from '../utils/forestData';
 import { getWeatherData, MONITORED_LOCATIONS } from '../utils/weather';
+import { getKenyaWeatherData, getKenyaForestData, getKenyaAirQuality, KENYA_LOCATIONS, KENYA_FORESTS } from '../utils/kenyaApis';
 import type { ForestCoverageData, RegionForestData } from '../utils/forestData';
 
 interface WeatherAlert {
@@ -163,10 +164,16 @@ const Dashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Environmental Dashboard</h1>
-          <p className="text-slate-400 mt-1">Monitor global forest health, biodiversity, and climate action</p>
+          <h1 className="text-3xl font-bold text-white">🇰🇪 EcoSentinel: Kenya Triple Crisis Intelligence</h1>
+          <p className="text-slate-400 mt-1">
+            Tackling <span className="text-emerald-400 font-bold">Climate Change</span>, <span className="text-blue-400 font-bold">Biodiversity Loss</span>, and <span className="text-yellow-400 font-bold">Pollution & Waste</span> with real-time, hyperlocal insights for local decision-makers.
+          </p>
+          <p className="text-xs text-slate-500 mt-2">Empowering communities in Kenya to act faster and smarter.</p>
         </div>
       </div>
+
+      {/* Hyperlocal Insights */}
+      <HyperlocalInsights />
 
       {/* Key Metrics - Responsive Full Width */}
       <div className="grid grid-cols-2 gap-6 w-full">
@@ -383,6 +390,158 @@ const Dashboard: React.FC = () => {
           />
         </div>
       </div>
+    </div>
+  );
+};
+
+// --- Hyperlocal Insights Component ---
+const HyperlocalInsights: React.FC = () => {
+  const [location, setLocation] = useState<{lat: number, lon: number} | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [kenyaData, setKenyaData] = useState<any>(null);
+  const [nearestKenyaLocation, setNearestKenyaLocation] = useState<string>('Nairobi');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userLocation = {lat: pos.coords.latitude, lon: pos.coords.longitude};
+          setLocation(userLocation);
+          
+          // Find nearest Kenya location
+          const nearest = KENYA_LOCATIONS.reduce((prev, curr) => {
+            const prevDistance = Math.sqrt(
+              Math.pow(prev.coordinates.lat - userLocation.lat, 2) + 
+              Math.pow(prev.coordinates.lng - userLocation.lon, 2)
+            );
+            const currDistance = Math.sqrt(
+              Math.pow(curr.coordinates.lat - userLocation.lat, 2) + 
+              Math.pow(curr.coordinates.lng - userLocation.lon, 2)
+            );
+            return currDistance < prevDistance ? curr : prev;
+          });
+          
+          setNearestKenyaLocation(nearest.name);
+        },
+        (err) => setError('Location access denied. Showing data for Nairobi, Kenya.')
+      );
+    } else {
+      setError('Geolocation not supported. Showing data for Nairobi, Kenya.');
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchKenyaData = async () => {
+      setLoading(true);
+      try {
+        const [weatherData, airQualityData, forestData] = await Promise.all([
+          getKenyaWeatherData(nearestKenyaLocation),
+          getKenyaAirQuality(nearestKenyaLocation),
+          getKenyaForestData()
+        ]);
+
+        setKenyaData({
+          weather: weatherData,
+          airQuality: airQualityData,
+          forests: forestData,
+          location: KENYA_LOCATIONS.find(loc => loc.name === nearestKenyaLocation)
+        });
+      } catch (error) {
+        console.error('Error fetching Kenya data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchKenyaData();
+  }, [nearestKenyaLocation]);
+
+  return (
+    <div className="bg-slate-900/70 border border-emerald-700/30 rounded-2xl p-6 mb-6">
+      <h2 className="text-xl font-bold text-emerald-400 mb-2">🇰🇪 Kenya Hyperlocal Insights</h2>
+      
+      {loading ? (
+        <div className="flex items-center gap-2">
+          <Loader2 className="h-4 w-4 text-emerald-400 animate-spin" />
+          <p className="text-slate-400">Fetching real-time Kenya environmental data...</p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {/* Location Info */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-slate-800/50 rounded-lg p-4">
+              <h3 className="text-white font-semibold mb-2">📍 Your Location</h3>
+              {location ? (
+                <div>
+                  <p className="text-emerald-300">Nearest Kenya City: <span className="font-bold">{nearestKenyaLocation}</span></p>
+                  <p className="text-slate-400 text-sm">Lat: {location.lat.toFixed(3)}, Lon: {location.lon.toFixed(3)}</p>
+                  {kenyaData?.location && (
+                    <p className="text-slate-400 text-sm">Region: {kenyaData.location.region}</p>
+                  )}
+                </div>
+              ) : (
+                <p className="text-slate-400">{error || 'Detecting location...'}</p>
+              )}
+            </div>
+
+            {/* Weather Data */}
+            {kenyaData?.weather && (
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <h3 className="text-white font-semibold mb-2">🌤️ Current Weather</h3>
+                <p className="text-blue-300">{kenyaData.weather.temperature}°C, {kenyaData.weather.description}</p>
+                <p className="text-slate-400 text-sm">Humidity: {kenyaData.weather.humidity}% | Wind: {kenyaData.weather.windSpeed} m/s</p>
+              </div>
+            )}
+          </div>
+
+          {/* Environmental Data */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Air Quality */}
+            {kenyaData?.airQuality && (
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <h3 className="text-white font-semibold mb-2">💨 Air Quality</h3>
+                <p className={`font-bold ${kenyaData.airQuality.status === 'Good' ? 'text-green-400' : 
+                  kenyaData.airQuality.status === 'Moderate' ? 'text-yellow-400' : 'text-red-400'}`}>
+                  {kenyaData.airQuality.status} (AQI: {kenyaData.airQuality.aqi})
+                </p>
+                <p className="text-slate-400 text-sm">PM2.5: {kenyaData.airQuality.pm25} μg/m³</p>
+              </div>
+            )}
+
+            {/* Forest Data */}
+            {kenyaData?.forests && kenyaData.forests.length > 0 && (
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <h3 className="text-white font-semibold mb-2">🌲 Nearest Forest</h3>
+                <p className="text-emerald-300 font-bold">{kenyaData.forests[0].region}</p>
+                <p className="text-slate-400 text-sm">Coverage: {kenyaData.forests[0].coverage}%</p>
+                <p className="text-slate-400 text-sm">Status: {kenyaData.forests[0].status}</p>
+              </div>
+            )}
+
+            {/* Local Challenges */}
+            {kenyaData?.location?.mainChallenges && (
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <h3 className="text-white font-semibold mb-2">⚠️ Local Challenges</h3>
+                {kenyaData.location.mainChallenges.slice(0, 2).map((challenge: string, index: number) => (
+                  <p key={index} className="text-red-300 text-sm">• {challenge}</p>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Action Suggestions */}
+          <div className="bg-emerald-900/30 border border-emerald-700/50 rounded-lg p-4">
+            <h3 className="text-emerald-300 font-semibold mb-2">💡 Recommended Actions</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+              <p className="text-slate-300">• Monitor local air quality via NEMA alerts</p>
+              <p className="text-slate-300">• Support {nearestKenyaLocation} community conservation</p>
+              <p className="text-slate-300">• Join local reforestation initiatives</p>
+              <p className="text-slate-300">• Report environmental issues to authorities</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
