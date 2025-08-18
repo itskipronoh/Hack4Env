@@ -63,7 +63,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-white">EcoSentinel</h1>
-              <p className="text-xs text-slate-400">Climate & Land Action</p>
+              <p className="text-xs text-slate-400">Climate,Biodiversity & pollution action</p>
             </div>
           </div>
 

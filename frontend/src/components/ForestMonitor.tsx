@@ -6,7 +6,7 @@ import type { ForestCoverageData, RegionForestData } from '../utils/forestData';
 
 const ForestMonitor: React.FC = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState('6months');
-  const [selectedRegion, setSelectedRegion] = useState('global');
+  const [selectedRegion, setSelectedRegion] = useState('national');
 
   // State for data from APIs
   const [forestData, setForestData] = useState<ForestCoverageData[]>([]);
@@ -17,7 +17,7 @@ const ForestMonitor: React.FC = () => {
   const [isLoadingRegions, setIsLoadingRegions] = useState(true);
 
   // Key metrics
-  const [globalCoverage, setGlobalCoverage] = useState<number | null>(null);
+  const [nationalCoverage, setNationalCoverage] = useState<number | null>(null);
   const [coverageChange, setCoverageChange] = useState<string | null>(null);
   const [forestLoss, setForestLoss] = useState<string | null>(null);
   const [forestGain, setForestGain] = useState<string | null>(null);
@@ -34,7 +34,7 @@ const ForestMonitor: React.FC = () => {
         if (data.length > 0) {
           // Latest forest coverage
           const latestCoverage = data[data.length - 1].coverage;
-          setGlobalCoverage(latestCoverage);
+          setNationalCoverage(latestCoverage);
 
           // Compare with previous month
           if (data.length > 1) {
@@ -44,11 +44,11 @@ const ForestMonitor: React.FC = () => {
             setCoverageChange(`${change >= 0 ? '+' : ''}${changePercent}%`);
           }
 
-          // Calculate monthly loss and gain in hectares (millions)
+          // Calculate monthly loss and gain in hectares (thousands)
           if (data.length > 0) {
             const latestData = data[data.length - 1];
-            setForestLoss(`${latestData.loss.toFixed(1)}M`);
-            setForestGain(`${latestData.gain.toFixed(1)}M`);
+            setForestLoss(`${latestData.loss.toFixed(1)}K`);
+            setForestGain(`${latestData.gain.toFixed(1)}K`);
           }
         }
       } catch (error) {
@@ -111,8 +111,8 @@ const ForestMonitor: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Forest Cover Monitoring</h1>
-          <p className="text-slate-400 mt-1">Real-time satellite monitoring of global forest coverage and health</p>
+          <h1 className="text-3xl font-bold text-white">Kenya Forest Cover Monitoring</h1>
+          <p className="text-slate-400 mt-1">Real-time satellite monitoring of Kenya's forest coverage and health</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <select 
@@ -132,14 +132,15 @@ const ForestMonitor: React.FC = () => {
             className="px-4 py-2 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
             disabled={isLoadingForest}
           >
-            <option value="global">Global View</option>
-            <option value="amazon">Amazon Basin</option>
-            <option value="congo">Congo Basin</option>
-            <option value="boreal">Boreal Forest</option>
-            <option value="southeast">Southeast Asia</option>
-            <option value="atlantic">Atlantic Forest</option>
+            <option value="national">National View</option>
+            <option value="central">Central Kenya</option>
+            <option value="coastal">Coastal Forests</option>
+            <option value="mount-kenya">Mount Kenya</option>
+            <option value="aberdares">Aberdare Ranges</option>
+            <option value="mau">Mau Forest Complex</option>
+            <option value="kakamega">Kakamega Forest</option>
+            <option value="tsavo">Tsavo Ecosystem</option>
           </select>
-          {/* Export Data button removed */}
         </div>
       </div>
 
@@ -151,11 +152,11 @@ const ForestMonitor: React.FC = () => {
               <TreePine className="h-6 w-6 text-emerald-400" />
             </div>
             <div>
-              <p className="text-slate-400 text-sm">Global Coverage</p>
+              <p className="text-slate-400 text-sm">National Coverage</p>
               {isLoadingForest ? (
                 <div className="animate-pulse h-8 w-16 bg-slate-700 rounded"></div>
               ) : (
-                <p className="text-2xl font-bold text-white">{globalCoverage?.toFixed(1)}%</p>
+                <p className="text-2xl font-bold text-white">{nationalCoverage?.toFixed(1)}%</p>
               )}
             </div>
           </div>
@@ -202,7 +203,7 @@ const ForestMonitor: React.FC = () => {
               <TrendingUp className="h-6 w-6 text-blue-400" />
             </div>
             <div>
-              <p className="text-slate-400 text-sm">Forest Gain</p>
+              <p className="text-slate-400 text-sm">Forest Restoration</p>
               {isLoadingForest ? (
                 <div className="animate-pulse h-8 w-16 bg-slate-700 rounded"></div>
               ) : (
@@ -223,7 +224,7 @@ const ForestMonitor: React.FC = () => {
         <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-semibold text-white">Forest Coverage Trend</h3>
+              <h3 className="text-lg font-semibold text-white">Kenya Forest Coverage Trend</h3>
               <p className="text-slate-400 text-sm">Monthly forest coverage percentage over time</p>
             </div>
           </div>
@@ -255,12 +256,12 @@ const ForestMonitor: React.FC = () => {
           )}
         </div>
 
-        {/* Forest Loss vs Gain */}
+        {/* Forest Loss vs Restoration */}
         <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-semibold text-white">Forest Loss vs Gain</h3>
-              <p className="text-slate-400 text-sm">Comparison of deforestation and restoration</p>
+              <h3 className="text-lg font-semibold text-white">Forest Loss vs Restoration</h3>
+              <p className="text-slate-400 text-sm">Comparison of deforestation and restoration efforts</p>
             </div>
           </div>
           {isLoadingForest ? (
@@ -297,7 +298,7 @@ const ForestMonitor: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-sm text-slate-300">Forest Gain</span>
+              <span className="text-sm text-slate-300">Forest Restoration</span>
             </div>
           </div>
         </div>
@@ -307,14 +308,14 @@ const ForestMonitor: React.FC = () => {
       <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-lg font-semibold text-white">Regional Forest Status</h3>
-            <p className="text-slate-400 text-sm">Coverage and trend analysis by major forest regions</p>
+            <h3 className="text-lg font-semibold text-white">Kenya Forest Regions Status</h3>
+            <p className="text-slate-400 text-sm">Coverage and trend analysis by major forest regions in Kenya</p>
           </div>
         </div>
         {isLoadingRegions ? (
           <LoadingIndicator />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {regionData.map((region) => (
               <div key={region.region} className="p-4 bg-slate-800/30 rounded-xl border border-slate-700/50 hover:border-slate-600/50 transition-all">
                 <div className="flex items-center justify-between mb-3">
