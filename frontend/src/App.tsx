@@ -22,7 +22,7 @@ function App() {
           <Route path="/forest" element={<ForestMonitor />} />
           <Route path="/biodiversity" element={<BiodiversityTracker />} />
           <Route path="/climate" element={<ClimateAlerts />} />
-           <Route path="/pollution" element={<Pollution />} /> {/* Add this route */}
+         <Route path="/pollution" element={<Pollution />} /> {/* Add this route */}
           <Route path="/ecoai" element={<EcoAI />} />
             <Route path="/my-inbox" element={<ChatPage/>} />
         </Routes>
