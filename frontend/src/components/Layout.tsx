@@ -38,7 +38,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: 'Biodiversity Watch', href: '/biodiversity', icon: Bird },
     { name: 'Pollution & Waste', href: '/pollution', icon: CloudRain },
     { name: 'EcoSentinelAI Chat', href: '/ecoai', icon: Brain },
-    isSignedIn ? { name: 'My Inbox', href: '/my-inbox', icon: MessageCircle } : null,
+    { name: 'SMS', href: '/SmsRegistration', icon: MessageCircle }, // Add SMS registration
+    // isSignedIn ? { name: 'My Inbox', href: '/my-inbox', icon: MessageCircle } : null,
     // { name: 'My Inbox', href: '/my-inbox', icon: MessageCircle },
   ].filter(Boolean);
 
