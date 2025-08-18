@@ -130,16 +130,16 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const speciesData = [
-    { category: 'Birds', count: 234, trend: 'up' },
-    { category: 'Mammals', count: 89, trend: 'up' },
-    { category: 'Plants', count: 456, trend: 'down' },
-    { category: 'Insects', count: 678, trend: 'up' },
+    { category: 'Birds', count: 1134, trend: 'up' }, // Kenya has over 1,000 bird species
+    { category: 'Mammals', count: 359, trend: 'down' }, // Including big five and endemic species
+    { category: 'Plants', count: 6506, trend: 'down' }, // Kenya's flora diversity
+    { category: 'Reptiles', count: 191, trend: 'up' },
   ];
 
   const projects = [
-    { id: 1, name: 'Amazon Restoration', progress: 78, location: 'Brazil', trees: 15000 },
-    { id: 2, name: 'Sahel Regreening', progress: 45, location: 'Mali', trees: 8500 },
-    { id: 3, name: 'Coastal Mangroves', progress: 92, location: 'Philippines', trees: 12000 },
+    { id: 1, name: 'Mau Forest Restoration', progress: 65, location: 'Rift Valley, Kenya', trees: 25000 },
+    { id: 2, name: 'Green Belt Movement', progress: 82, location: 'Central Kenya', trees: 51000 },
+    { id: 3, name: 'Coastal Forest Recovery', progress: 38, location: 'Coastal Kenya', trees: 12500 },
   ];
 
   const formatTimeAgo = (dateString: string): string => {
@@ -163,28 +163,41 @@ const Dashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">EcoSentinel: Kenya Triple Crisis Intelligence</h1>
-          <p className="text-slate-400 mt-1">
-            Tackling <span className="text-emerald-400 font-bold">Climate Change</span>, <span className="text-blue-400 font-bold">Biodiversity Loss</span>, and <span className="text-yellow-400 font-bold">Pollution & Waste</span> with real-time, hyperlocal insights for local decision-makers.
-          </p>
-          <p className="text-xs text-slate-500 mt-2">Empowering communities in Kenya to act faster and smarter.</p>
+          <h1 className="text-3xl font-bold text-white">Environmental Dashboard</h1>
+          <p className="text-slate-400 mt-1">Monitor global forest health, biodiversity, and climate action</p>
         </div>
       </div>
 
-      {/* Hyperlocal Insights */}
-      <HyperlocalInsights />
-
-      {/* Key Metrics - Triple Crisis */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-        {/* Climate Change Card */}
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-emerald-700/30 rounded-2xl p-8 flex flex-col items-center justify-between gap-6">
+      {/* Key Metrics - Responsive Full Width */}
+      <div className="grid grid-cols-2 gap-6 w-full">
+        {/* Forest Coverage */}
+        <div className="bg-slate-900/50 backdrop-blur-sm border border-emerald-700/30 rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex-1">
-            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wide">Climate Change</p>
-            <p className="text-3xl font-extrabold text-white mt-2">{globalCoverage.toFixed(1)}%</p>
+            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wide">Forest Coverage</p>
+            {isLoadingForest ? (
+              <div className="flex items-center gap-2 mt-2">
+                <Loader2 className="h-6 w-6 text-emerald-400 animate-spin" />
+                <div className="animate-pulse h-8 w-16 bg-slate-700 rounded"></div>
+              </div>
+            ) : (
+              <p className="text-3xl font-extrabold text-white mt-2">{globalCoverage.toFixed(1)}%</p>
+            )}
             <div className="flex items-center gap-2 mt-3">
-              <ArrowUpRight className="h-5 w-5 text-emerald-400" />
-              <span className="text-emerald-300 text-base font-semibold">{coverageChange}</span>
-              <span className="text-slate-500 text-xs">Forest coverage vs last month</span>
+              {isLoadingForest ? (
+                <div className="animate-pulse h-4 w-24 bg-slate-700 rounded"></div>
+              ) : coverageChange.startsWith('+') ? (
+                <>
+                  <ArrowUpRight className="h-5 w-5 text-emerald-400" />
+                  <span className="text-emerald-300 text-base font-semibold">{coverageChange}</span>
+                  <span className="text-slate-500 text-xs">vs last month</span>
+                </>
+              ) : (
+                <>
+                  <ArrowDownRight className="h-5 w-5 text-red-400" />
+                  <span className="text-red-300 text-base font-semibold">{coverageChange}</span>
+                  <span className="text-slate-500 text-xs">vs last month</span>
+                </>
+              )}
             </div>
           </div>
           <div className="p-5 bg-emerald-500/20 rounded-2xl flex items-center justify-center">
@@ -192,70 +205,35 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Biodiversity Loss Card */}
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-blue-700/30 rounded-2xl p-8 flex flex-col items-center justify-between gap-6">
+        {/* Species Tracked */}
+        {/* <div className="bg-slate-900/50 backdrop-blur-sm border border-blue-700/30 rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex-1">
-            <p className="text-blue-400 text-xs font-semibold uppercase tracking-wide">Biodiversity Loss</p>
-            <p className="text-3xl font-extrabold text-white mt-2">{speciesData.reduce((sum, s) => sum + s.count, 0)}</p>
+            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wide">Species Tracked</p>
+            <p className="text-3xl font-extrabold text-white mt-2">1,457</p>
             <div className="flex items-center gap-2 mt-3">
               <ArrowUpRight className="h-5 w-5 text-blue-400" />
-              <span className="text-blue-300 text-base font-semibold">{speciesData.filter(s => s.trend === 'up').length} ↑, {speciesData.filter(s => s.trend === 'down').length} ↓</span>
-              <span className="text-slate-500 text-xs">Species tracked</span>
+              <span className="text-blue-300 text-base font-semibold">+156</span>
+              <span className="text-slate-500 text-xs">this week</span>
             </div>
           </div>
           <div className="p-5 bg-blue-500/20 rounded-2xl flex items-center justify-center">
             <Bird className="h-12 w-12 text-blue-400" />
           </div>
-        </div>
+        </div> */}
 
-        {/* Pollution & Waste Card */}
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-yellow-700/30 rounded-2xl p-8 flex flex-col items-center justify-between gap-6">
+        {/* Active Alerts */}
+        <div className="bg-slate-900/50 backdrop-blur-sm border border-red-700/30 rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex-1">
-            <p className="text-yellow-400 text-xs font-semibold uppercase tracking-wide">Pollution & Waste</p>
-            <p className="text-3xl font-extrabold text-white mt-2">{activeAlertsCount}</p>
+            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wide">Active Alerts</p>
+            {isLoadingAlerts ? (
+              <div className="flex items-center gap-2 mt-2">
+                <Loader2 className="h-6 w-6 text-red-400 animate-spin" />
+                <div className="animate-pulse h-8 w-8 bg-slate-700 rounded"></div>
+              </div>
+            ) : (
+              <p className="text-3xl font-extrabold text-white mt-2">{activeAlertsCount}</p>
+            )}
             <div className="flex items-center gap-2 mt-3">
-              <AlertTriangle className="h-5 w-5 text-yellow-400" />
-              <span className="text-yellow-300 text-base font-semibold">{criticalAlertsCount} critical</span>
-              <span className="text-slate-500 text-xs">Active pollution alerts</span>
-            </div>
-          </div>
-          <div className="p-5 bg-yellow-500/20 rounded-2xl flex items-center justify-center">
-            <AlertTriangle className="h-12 w-12 text-yellow-400" />
-          </div>
-        </div>
-            <div className="flex items-center gap-2 mt-3">
-// --- Hyperlocal Insights Component ---
-const HyperlocalInsights: React.FC = () => {
-  const [location, setLocation] = useState<{lat: number, lon: number} | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => setLocation({lat: pos.coords.latitude, lon: pos.coords.longitude}),
-        (err) => setError('Location access denied or unavailable.')
-      );
-    } else {
-      setError('Geolocation not supported.');
-    }
-  }, []);
-
-  return (
-    <div className="bg-slate-900/70 border border-emerald-700/30 rounded-2xl p-6 mb-6">
-      <h2 className="text-xl font-bold text-emerald-400 mb-2">Hyperlocal Insights</h2>
-      {location ? (
-        <p className="text-slate-300">Your location: <span className="font-semibold">Lat {location.lat.toFixed(3)}, Lon {location.lon.toFixed(3)}</span></p>
-      ) : error ? (
-        <p className="text-red-400">{error}</p>
-      ) : (
-        <p className="text-slate-400">Detecting your location for hyperlocal environmental data...</p>
-      )}
-      {/* TODO: Add real-time local stats, alerts, and recommended actions here */}
-      <div className="mt-4">
-        <p className="text-slate-400 text-sm">EcoSentinel uses your location to provide actionable insights for your community. (Demo: connect to local APIs for real data!)</p>
-      </div>
-    </div>
-  );
-};
               <ArrowDownRight className="h-5 w-5 text-red-400" />
               {isLoadingAlerts ? (
                 <div className="animate-pulse h-4 w-20 bg-slate-700 rounded"></div>
@@ -277,8 +255,8 @@ const HyperlocalInsights: React.FC = () => {
       <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-lg font-semibold text-white">Forest Coverage Trend</h3>
-            <p className="text-slate-400 text-sm">Monthly coverage percentage and restoration progress from real satellite data</p>
+            <h3 className="text-lg font-semibold text-white">Kenya Forest Coverage Trend</h3>
+            <p className="text-slate-400 text-sm">Monthly forest coverage percentage for Kenya's key forests including Mau, Mount Kenya, and Aberdare ranges</p>
           </div>
           <Link to="/forest" className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 text-sm font-medium transition-colors">
             View Details
@@ -392,16 +370,16 @@ const HyperlocalInsights: React.FC = () => {
         </div>
       </div>
 
-      {/* Map Section - Global Environmental Map */}
+      {/* Map Section - Kenya Environmental Map */}
       <div id="dashboard-map-section" className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-white">Global Environmental Map</h3>
-          <p className="text-slate-400 text-sm">Search and explore locations worldwide for environmental monitoring</p>
+          <h3 className="text-lg font-semibold text-white">Kenya Environmental Intelligence Map</h3>
+          <p className="text-slate-400 text-sm">Monitor Kenya's key ecosystems: Mau Forest, Mount Kenya, Maasai Mara, Tsavo, and coastal regions</p>
         </div>
         <div className="h-80">
           <LeafletMap
-            center={[20, 0]}
-            zoom={2}
+            center={[-0.7893, 36.8219]}
+            zoom={6}
           />
         </div>
       </div>

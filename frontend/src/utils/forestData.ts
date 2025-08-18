@@ -28,32 +28,47 @@ export interface SatelliteAlert {
   imageUrl?: string;
 }
 
-// Forest regions with coordinates for API queries
+// Forest regions with coordinates for API queries - Kenya Focus
 export const FOREST_REGIONS = [
   {
-    id: 'amazon',
-    name: 'Amazon Basin',
-    bounds: { lat: -3.4653, lng: -62.2159, radius: 1000 }
+    id: 'mau',
+    name: 'Mau Forest Complex',
+    bounds: { lat: -0.4000, lng: 35.8500, radius: 50 }
   },
   {
-    id: 'congo',
-    name: 'Congo Basin',
-    bounds: { lat: -0.7282, lng: 23.6558, radius: 800 }
+    id: 'mount_kenya',
+    name: 'Mount Kenya Forest',
+    bounds: { lat: -0.1521, lng: 37.3084, radius: 30 }
   },
   {
-    id: 'boreal',
-    name: 'Boreal Forest',
-    bounds: { lat: 60.1756, lng: -112.4535, radius: 1200 }
+    id: 'aberdare',
+    name: 'Aberdare Range Forest',
+    bounds: { lat: -0.4167, lng: 36.7000, radius: 40 }
   },
   {
-    id: 'southeast',
-    name: 'Southeast Asia',
-    bounds: { lat: 3.9617, lng: 108.3042, radius: 900 }
+    id: 'kakamega',
+    name: 'Kakamega Forest',
+    bounds: { lat: 0.2667, lng: 34.8667, radius: 15 }
   },
   {
-    id: 'atlantic',
-    name: 'Atlantic Forest',
-    bounds: { lat: -22.9279, lng: -43.2075, radius: 700 }
+    id: 'arabuko_sokoke',
+    name: 'Arabuko Sokoke Forest',
+    bounds: { lat: -3.3000, lng: 39.9000, radius: 10 }
+  },
+  {
+    id: 'tsavo',
+    name: 'Tsavo Ecosystem',
+    bounds: { lat: -2.3833, lng: 38.4500, radius: 80 }
+  },
+  {
+    id: 'cherangani',
+    name: 'Cherangani Hills Forest',
+    bounds: { lat: 1.2000, lng: 35.4500, radius: 25 }
+  },
+  {
+    id: 'mt_elgon',
+    name: 'Mount Elgon Forest',
+    bounds: { lat: 1.1167, lng: 34.5500, radius: 20 }
   }
 ];
 

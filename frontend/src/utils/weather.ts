@@ -34,91 +34,113 @@ export interface Location {
 export const MONITORED_LOCATIONS: Location[] = [
   {
     id: 1,
-    name: 'California',
-    region: 'Western United States',
+    name: 'Nairobi',
+    region: 'Central Kenya',
     coordinates: {
-      lat: 36.7783,
-      lon: -119.4179
+      lat: -1.2921,
+      lon: 36.8219
     },
-    riskFactors: ['Wildfires', 'Drought', 'Heat Waves'],
-    description: 'Major agricultural region facing severe climate challenges'
+    riskFactors: ['Air Pollution', 'Urban Heat', 'Flash Floods'],
+    description: 'Kenya\'s capital city facing rapid urbanization challenges'
   },
   {
     id: 2,
-    name: 'Amazon Rainforest',
-    region: 'South America',
+    name: 'Mau Forest',
+    region: 'Rift Valley, Kenya',
     coordinates: {
-      lat: -3.4653,
-      lon: -62.2159
+      lat: -0.4000,
+      lon: 35.8500
     },
-    riskFactors: ['Deforestation', 'Biodiversity Loss', 'Fires'],
-    description: 'World\'s largest rainforest, crucial for global climate'
+    riskFactors: ['Deforestation', 'Land Encroachment', 'Biodiversity Loss'],
+    description: 'Kenya\'s largest indigenous forest and critical water tower'
   },
   {
     id: 3,
-    name: 'Great Barrier Reef',
-    region: 'Australia',
+    name: 'Maasai Mara',
+    region: 'Narok County, Kenya',
     coordinates: {
-      lat: -18.2871,
-      lon: 147.6992
+      lat: -1.4061,
+      lon: 35.0061
     },
-    riskFactors: ['Coral Bleaching', 'Ocean Acidification', 'Rising Temperatures'],
-    description: 'Largest coral reef system threatened by climate change'
+    riskFactors: ['Habitat Fragmentation', 'Human-Wildlife Conflict', 'Climate Variability'],
+    description: 'World-renowned wildlife reserve and migration corridor'
   },
   {
     id: 4,
-    name: 'Sahel Region',
-    region: 'North Africa',
+    name: 'Mount Kenya',
+    region: 'Central Kenya',
     coordinates: {
-      lat: 14.4974,
-      lon: 12.1000
+      lat: -0.1521,
+      lon: 37.3084
     },
-    riskFactors: ['Desertification', 'Drought', 'Food Security'],
-    description: 'Transitional zone vulnerable to climate variability'
+    riskFactors: ['Glacier Retreat', 'Temperature Rise', 'Ecosystem Shifts'],
+    description: 'Kenya\'s highest mountain and UNESCO World Heritage site'
   },
   {
     id: 5,
-    name: 'Arctic Circle',
-    region: 'Arctic',
+    name: 'Tsavo National Parks',
+    region: 'Coastal Kenya',
     coordinates: {
-      lat: 66.5622,
-      lon: -35.2744
+      lat: -2.3833,
+      lon: 38.4500
     },
-    riskFactors: ['Ice Melt', 'Permafrost Thaw', 'Ecosystem Disruption'],
-    description: 'Polar region experiencing rapid warming'
+    riskFactors: ['Poaching', 'Drought', 'Human Encroachment'],
+    description: 'Kenya\'s largest national park complex and elephant sanctuary'
   },
   {
     id: 6,
-    name: 'Maldives',
-    region: 'Indian Ocean',
+    name: 'Lake Victoria (Kenyan Coast)',
+    region: 'Western Kenya',
     coordinates: {
-      lat: 3.2028,
-      lon: 73.2207
+      lat: -0.3300,
+      lon: 34.2500
     },
-    riskFactors: ['Sea Level Rise', 'Coral Bleaching', 'Extreme Weather'],
-    description: 'Low-lying island nation threatened by rising seas'
+    riskFactors: ['Water Pollution', 'Overfishing', 'Invasive Species'],
+    description: 'Africa\'s largest lake and vital fisheries resource'
   },
   {
     id: 7,
-    name: 'Bangladesh Delta',
-    region: 'South Asia',
+    name: 'Aberdare Range',
+    region: 'Central Kenya',
     coordinates: {
-      lat: 23.6850,
-      lon: 90.3563
+      lat: -0.4167,
+      lon: 36.7000
     },
-    riskFactors: ['Flooding', 'Cyclones', 'Sea Level Rise'],
-    description: 'Densely populated delta vulnerable to climate impacts'
+    riskFactors: ['Forest Degradation', 'Water Scarcity', 'Wildlife Corridors'],
+    description: 'Important water catchment area and biodiversity hotspot'
   },
   {
     id: 8,
-    name: 'Mediterranean Basin',
-    region: 'Southern Europe',
+    name: 'Turkana County',
+    region: 'Northern Kenya',
     coordinates: {
-      lat: 41.2020,
-      lon: 17.8083
+      lat: 3.1167,
+      lon: 35.6167
     },
-    riskFactors: ['Heat Waves', 'Water Scarcity', 'Wildfires'],
-    description: 'Region experiencing increasing climate extremes'
+    riskFactors: ['Extreme Drought', 'Desertification', 'Food Insecurity'],
+    description: 'Arid region vulnerable to climate change impacts'
+  },
+  {
+    id: 9,
+    name: 'Coastal Kenya',
+    region: 'Indian Ocean Coast',
+    coordinates: {
+      lat: -4.0500,
+      lon: 39.6667
+    },
+    riskFactors: ['Sea Level Rise', 'Coastal Erosion', 'Coral Bleaching'],
+    description: 'Coastal communities facing marine ecosystem threats'
+  },
+  {
+    id: 10,
+    name: 'Laikipia Plateau',
+    region: 'Central Kenya',
+    coordinates: {
+      lat: 0.2500,
+      lon: 36.8500
+    },
+    riskFactors: ['Land Use Conflicts', 'Wildlife Corridors', 'Water Stress'],
+    description: 'Semi-arid rangeland balancing conservation and community needs'
   }
 ];
 
