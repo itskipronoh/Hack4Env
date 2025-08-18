@@ -9,8 +9,7 @@ import ClimateAlerts from './components/ClimateAlerts';
 import EcoAI from './components/EcoAI';
 import Pollution from './components/Pollution';
 import ChatPage from './components/Chat/ChatPage';
-// import SmsRegistration from './components/SmsRegistration';
-import SmsRegistration from './components/SmsRegistration'; // Ensure this path is correct
+import SmsRegistration from './components/SmsRegistration';
 
 // import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 
@@ -27,7 +26,7 @@ function App() {
           <Route path="/climate" element={<ClimateAlerts />} />
          <Route path="/pollution" element={<Pollution />} /> {/* Add this route */}
           <Route path="/ecoai" element={<EcoAI />} />
-           <Route path="/sms" element={<SmsRegistration />} />
+           <Route path="/SmsRegistration" element={<SmsRegistration />} />
             {/* <Route path="/my-inbox" element={<ChatPage/>} /> */}
         </Routes>
       </Layout>
