@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <defs>
+    <linearGradient id="leafGradSmall" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background representing Earth -->
+  <circle cx="8" cy="8" r="7.5" fill="#3b82f6" stroke="#1e40af" stroke-width="0.5"/>
+  
+  <!-- Simplified forest/nature -->
+  <path d="M3 11 C3 9.5, 4 8.5, 5.5 8.5 C5.5 7.5, 6.5 6.5, 8 6.5 C9.5 6.5, 10.5 7.5, 10.5 8.5 C12 8.5, 13 9.5, 13 11 L3 11 Z" fill="url(#leafGradSmall)"/>
+  
+  <!-- Monitoring signal -->
+  <circle cx="8" cy="4" r="1" fill="#fbbf24"/>
+  <circle cx="8" cy="4" r="2" fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.6"/>
+  
+  <!-- Small data points -->
+  <circle cx="5" cy="9" r="0.5" fill="#ffffff" opacity="0.9"/>
+  <circle cx="11" cy="9.5" r="0.5" fill="#ffffff" opacity="0.9"/>
+</svg>

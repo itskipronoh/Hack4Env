@@ -1,0 +1,1 @@
+ICO favicon would normally be a binary file. For now, I'll create a simplified version and recommend using the SVG favicon.

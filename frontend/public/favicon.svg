@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="earthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle representing Earth -->
+  <circle cx="16" cy="16" r="15" fill="url(#earthGrad)" stroke="#1e40af" stroke-width="1"/>
+  
+  <!-- Forest/Tree representation -->
+  <path d="M8 20 C8 18, 10 16, 12 16 C12 14, 14 12, 16 12 C18 12, 20 14, 20 16 C22 16, 24 18, 24 20 L8 20 Z" fill="url(#leafGrad)" opacity="0.9"/>
+  
+  <!-- Mountain/Landscape -->
+  <path d="M4 22 L8 16 L12 18 L16 14 L20 17 L24 15 L28 22 Z" fill="#4ade80" opacity="0.7"/>
+  
+  <!-- Monitoring signal/radar waves -->
+  <circle cx="16" cy="10" r="2" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="16" cy="10" r="4" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.5"/>
+  <circle cx="16" cy="10" r="6" fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.3"/>
+  
+  <!-- Small satellite/monitoring device -->
+  <rect x="14.5" y="8.5" width="3" height="3" fill="#fbbf24" rx="0.5"/>
+  
+  <!-- Data points/sensors -->
+  <circle cx="10" cy="18" r="1" fill="#ffffff" opacity="0.8"/>
+  <circle cx="22" cy="19" r="1" fill="#ffffff" opacity="0.8"/>
+  <circle cx="16" cy="22" r="1" fill="#ffffff" opacity="0.8"/>
+</svg>

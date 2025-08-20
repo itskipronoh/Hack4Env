@@ -1,0 +1,22 @@
+{
+  "name": "EcoSentinel",
+  "short_name": "EcoSentinel",
+  "description": "Environmental Monitoring Platform for Climate Action",
+  "theme_color": "#22c55e",
+  "background_color": "#1f2937",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-16.svg",
+      "sizes": "16x16",
+      "type": "image/svg+xml"
+    }
+  ]
+}
