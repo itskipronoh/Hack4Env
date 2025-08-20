@@ -83,7 +83,7 @@ export interface AirQualityData {
 export const getWorldBankForestData = async (countryCode: string = 'WLD'): Promise<ForestCoverageData[]> => {
   try {
     const response = await fetch(
-      `https://api.worldbank.org/v2/country/${countryCode}/indicator/AG.LND.FRST.ZS?format=json&date=2010:2022&per_page=50`
+      `${import.meta.env.VITE_WORLD_BANK_API || 'https://api.worldbank.org/v2'}/country/${countryCode}/indicator/AG.LND.FRST.ZS?format=json&date=2010:2022&per_page=50`
     );
     
     if (!response.ok) throw new Error('World Bank API failed');
@@ -114,7 +114,7 @@ export const getWorldBankForestData = async (countryCode: string = 'WLD'): Promi
 export const getNASALandCoverData = async (lat: number, lon: number): Promise<any> => {
   try {
     const response = await fetch(
-      `https://modis.gsfc.nasa.gov/services/json/MODIS/${lat},${lon}`,
+      `${import.meta.env.VITE_NASA_MODIS_API_URL || 'https://modis.gsfc.nasa.gov/services/json/MODIS'}/${lat},${lon}`,
       {
         headers: {
           'User-Agent': 'EcoSphere/1.0'
@@ -138,7 +138,7 @@ export const getGlobalForestWatchData = async (iso: string = 'BRA'): Promise<any
   try {
     // Global Forest Watch uses various endpoints
     const response = await fetch(
-      `https://production-api.globalforestwatch.org/v1/forest-change/loss-by-year/country/${iso}?period=2010,2022`,
+      `${import.meta.env.VITE_GLOBAL_FOREST_WATCH_API_URL || 'https://production-api.globalforestwatch.org/v1/forest-change/loss-by-year/country'}/${iso}?period=2010,2022`,
       {
         headers: {
           'Content-Type': 'application/json'
@@ -164,7 +164,7 @@ export const getGlobalForestWatchData = async (iso: string = 'BRA'): Promise<any
  */
 export const getGBIFSpeciesData = async (taxonKey?: number, limit: number = 20): Promise<BiodiversityData[]> => {
   try {
-    const baseUrl = 'https://api.gbif.org/v1/species';
+  const baseUrl = import.meta.env.VITE_GBIF_API_URL || 'https://api.gbif.org/v1/species';
     const url = taxonKey 
       ? `${baseUrl}/${taxonKey}/children?limit=${limit}`
       : `${baseUrl}/search?limit=${limit}&status=ACCEPTED`;
@@ -230,7 +230,7 @@ export const getIUCNRedListData = async (region?: string): Promise<BiodiversityD
  */
 export const getGBIFOccurrenceData = async (speciesKey?: number, country?: string): Promise<any[]> => {
   try {
-    let url = 'https://api.gbif.org/v1/occurrence/search?limit=50';
+  let url = `${import.meta.env.VITE_GBIF_API_URL || 'https://api.gbif.org/v1/occurrence/search'}?limit=50`;
     
     if (speciesKey) url += `&taxonKey=${speciesKey}`;
     if (country) url += `&country=${country}`;
@@ -263,7 +263,7 @@ export const getOpenWeatherData = async (lat: number, lon: number): Promise<Clim
     }
     
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+      `${import.meta.env.VITE_OPENWEATHER_BASE_URL || 'https://api.openweathermap.org/data/2.5'}/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
     );
     
     if (!response.ok) throw new Error('OpenWeather API failed');
@@ -291,7 +291,7 @@ export const getOpenWeatherData = async (lat: number, lon: number): Promise<Clim
 export const getOpenMeteoClimateData = async (lat: number, lon: number): Promise<ClimateData | null> => {
   try {
     const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,surface_pressure&timezone=auto`
+      `${import.meta.env.VITE_OPENMETEO_BASE_URL || 'https://api.open-meteo.com/v1/forecast'}?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,surface_pressure&timezone=auto`
     );
     
     if (!response.ok) throw new Error('Open-Meteo API failed');

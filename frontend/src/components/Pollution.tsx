@@ -74,110 +74,89 @@ const Pollution: React.FC = () => {
   const [wasteGenerated, setWasteGenerated] = useState<string>('');
   const [recyclingRate, setRecyclingRate] = useState<string>('');
 
-  // Fetch air quality data
+  // Fetch air quality data from API
   useEffect(() => {
     const fetchAirQualityData = async () => {
       setIsLoadingAir(true);
       try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        const mockData: AirQualityData[] = [
-          { time: '00:00', aqi: 85, pm25: 35, pm10: 55, o3: 45, no2: 28, so2: 12 },
-          { time: '04:00', aqi: 92, pm25: 42, pm10: 62, o3: 38, no2: 32, so2: 15 },
-          { time: '08:00', aqi: 125, pm25: 65, pm10: 85, o3: 55, no2: 45, so2: 22 },
-          { time: '12:00', aqi: 110, pm25: 58, pm10: 78, o3: 62, no2: 38, so2: 18 },
-          { time: '16:00', aqi: 95, pm25: 48, pm10: 68, o3: 48, no2: 35, so2: 16 },
-          { time: '20:00', aqi: 88, pm25: 38, pm10: 58, o3: 42, no2: 30, so2: 14 },
-        ];
-        
-        setAirQualityData(mockData);
-        setCurrentAQI(mockData[mockData.length - 1].aqi);
-        
+        const apiKey = import.meta.env.VITE_AIR_QUALITY_API_KEY;
+        const baseUrl = import.meta.env.VITE_OPENWEATHER_AIR_POLLUTION_URL;
+        const city = selectedCity;
+        // You may need to map city to lat/lon, or use a backend endpoint
+        // Example: Nairobi lat/lon
+        const cityCoords: Record<string, { lat: number; lon: number }> = {
+          nairobi: { lat: -1.286389, lon: 36.817223 },
+          mombasa: { lat: -4.043477, lon: 39.668206 },
+          kisumu: { lat: -0.1022, lon: 34.7617 },
+          nakuru: { lat: -0.303099, lon: 36.080025 },
+          eldoret: { lat: 0.5204, lon: 35.2698 }
+        };
+        const { lat, lon } = cityCoords[city] || cityCoords['nairobi'];
+        const url = `${baseUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch air quality data');
+        const data = await response.json();
+        // Transform API response to AirQualityData[] as needed
+        const aqi = data.list[0]?.main.aqi || 0;
+        setCurrentAQI(aqi);
+        setAirQualityData([{ time: 'Now', aqi, pm25: data.list[0]?.components.pm2_5 || 0, pm10: data.list[0]?.components.pm10 || 0, o3: data.list[0]?.components.o3 || 0, no2: data.list[0]?.components.no2 || 0, so2: data.list[0]?.components.so2 || 0 }]);
         // Set AQI status
-        const latestAQI = mockData[mockData.length - 1].aqi;
-        if (latestAQI <= 50) setAQIStatus('Good');
-        else if (latestAQI <= 100) setAQIStatus('Moderate');
-        else if (latestAQI <= 150) setAQIStatus('Unhealthy for Sensitive');
-        else if (latestAQI <= 200) setAQIStatus('Unhealthy');
+        if (aqi <= 50) setAQIStatus('Good');
+        else if (aqi <= 100) setAQIStatus('Moderate');
+        else if (aqi <= 150) setAQIStatus('Unhealthy for Sensitive');
+        else if (aqi <= 200) setAQIStatus('Unhealthy');
         else setAQIStatus('Very Unhealthy');
-        
       } catch (error) {
         console.error('Error fetching air quality data:', error);
       } finally {
         setIsLoadingAir(false);
       }
     };
-
     fetchAirQualityData();
   }, [selectedTimeRange, selectedCity]);
 
-  // Fetch water quality data
+  // Fetch water quality data from API
   useEffect(() => {
     const fetchWaterQualityData = async () => {
       setIsLoadingWater(true);
       try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const mockData: WaterQualityData[] = [
-          { location: 'Nairobi River', ph: 6.2, turbidity: 15.8, dissolved_oxygen: 4.2, pollution_level: 'high', last_updated: '2024-01-15 14:30' },
-          { location: 'Lake Victoria', ph: 7.8, turbidity: 8.5, dissolved_oxygen: 7.8, pollution_level: 'moderate', last_updated: '2024-01-15 14:25' },
-          { location: 'Tana River', ph: 7.2, turbidity: 12.3, dissolved_oxygen: 6.1, pollution_level: 'moderate', last_updated: '2024-01-15 14:20' },
-          { location: 'Mombasa Coast', ph: 8.1, turbidity: 6.2, dissolved_oxygen: 8.5, pollution_level: 'low', last_updated: '2024-01-15 14:15' },
-          { location: 'Athi River', ph: 5.8, turbidity: 22.1, dissolved_oxygen: 3.5, pollution_level: 'critical', last_updated: '2024-01-15 14:10' },
-        ];
-        
-        setWaterQualityData(mockData);
+        const baseUrl = import.meta.env.VITE_WATER_QUALITY_API_URL;
+        const response = await fetch(baseUrl);
+        if (!response.ok) throw new Error('Failed to fetch water quality data');
+        const data = await response.json();
+        // Transform API response to WaterQualityData[] as needed
+        setWaterQualityData(data);
       } catch (error) {
         console.error('Error fetching water quality data:', error);
       } finally {
         setIsLoadingWater(false);
       }
     };
-
     fetchWaterQualityData();
   }, []);
 
-  // Fetch waste data
+  // Fetch waste and pollution sources data from API
   useEffect(() => {
     const fetchWasteData = async () => {
       setIsLoadingWaste(true);
       try {
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        const mockWasteData: WasteData[] = [
-          { category: 'Plastic', amount: 450, recycled: 95, color: '#ef4444' },
-          { category: 'Organic', amount: 1200, recycled: 380, color: '#22c55e' },
-          { category: 'Paper', amount: 280, recycled: 210, color: '#3b82f6' },
-          { category: 'Metal', amount: 120, recycled: 85, color: '#f59e0b' },
-          { category: 'Glass', amount: 90, recycled: 70, color: '#8b5cf6' },
-          { category: 'E-waste', amount: 65, recycled: 15, color: '#f97316' },
-        ];
-        
-        const mockPollutionSources: PollutionSource[] = [
-          { source: 'Vehicle Emissions', contribution: 45, trend: 'increasing', color: '#ef4444' },
-          { source: 'Industrial', contribution: 28, trend: 'stable', color: '#f59e0b' },
-          { source: 'Waste Burning', contribution: 15, trend: 'decreasing', color: '#8b5cf6' },
-          { source: 'Construction', contribution: 8, trend: 'increasing', color: '#06b6d4' },
-          { source: 'Agriculture', contribution: 4, trend: 'stable', color: '#22c55e' },
-        ];
-        
-        setWasteData(mockWasteData);
-        setPollutionSources(mockPollutionSources);
-        
+        const baseUrl = import.meta.env.VITE_WASTE_API_URL;
+        const response = await fetch(baseUrl);
+        if (!response.ok) throw new Error('Failed to fetch waste data');
+        const data = await response.json();
+        setWasteData(data.waste || []);
+        setPollutionSources(data.pollutionSources || []);
         // Calculate waste metrics
-        const totalWaste = mockWasteData.reduce((sum, item) => sum + item.amount, 0);
-        const totalRecycled = mockWasteData.reduce((sum, item) => sum + item.recycled, 0);
+        const totalWaste = data.waste.reduce((sum: number, item: WasteData) => sum + item.amount, 0);
+        const totalRecycled = data.waste.reduce((sum: number, item: WasteData) => sum + item.recycled, 0);
         setWasteGenerated(`${(totalWaste / 1000).toFixed(1)}K`);
         setRecyclingRate(`${((totalRecycled / totalWaste) * 100).toFixed(1)}%`);
-        
       } catch (error) {
         console.error('Error fetching waste data:', error);
       } finally {
         setIsLoadingWaste(false);
       }
     };
-
     fetchWasteData();
   }, []);
 
