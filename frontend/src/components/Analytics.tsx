@@ -36,6 +36,7 @@ const statusColors: Record<string, string> = {
 };
 
 export const Analytics = () => {
+  const [forestData, setForestData] = useState<any>(null);
   const [speciesData, setSpeciesData] = useState<SpeciesCategoryData[]>([]);
   const [conservationData, setConservationData] = useState<ConservationStatusData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,12 +48,12 @@ export const Analytics = () => {
       setError(null);
       try {
         // Fetch species count
-        const speciesRes = await fetch('/api/gbif-counts');
+        const speciesRes = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/gbif-counts`);
         if (!speciesRes.ok) throw new Error(`GBIF API error: ${speciesRes.status}`);
         const speciesJson: SpeciesCategoryData[] = await speciesRes.json();
 
         // Fetch conservation status
-        const consRes = await fetch('/api/conservation-status');
+        const consRes = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/conservation-status`);
         if (!consRes.ok) throw new Error(`Conservation API error: ${consRes.status}`);
         const consRaw = await consRes.json();
 
@@ -62,6 +63,12 @@ export const Analytics = () => {
           value: Number(value),
           color: statusColors[name] || statusColors['Unknown'],
         }));
+
+        // Fetch forest data
+        const forestRes = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5173'}/forest`);
+        if (!forestRes.ok) throw new Error(`Forest API error: ${forestRes.status}`);
+        const forestJson = await forestRes.json();
+        setForestData(forestJson);
 
         setSpeciesData(speciesJson);
         setConservationData(consData);
@@ -96,6 +103,18 @@ export const Analytics = () => {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* Forest Data Display */}
+      <div style={{ flex: 1, minWidth: 300 }}>
+        <h3>Forest Data</h3>
+        {forestData ? (
+          <pre style={{ background: '#f3f4f6', padding: 16, borderRadius: 8, maxHeight: 300, overflow: 'auto' }}>
+            {JSON.stringify(forestData, null, 2)}
+          </pre>
+        ) : (
+          <div>No forest data available.</div>
+        )}
       </div>
 
       {/* Conservation Status Pie Chart */}

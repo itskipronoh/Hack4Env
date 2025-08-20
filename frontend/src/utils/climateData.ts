@@ -46,9 +46,9 @@ const fetchOpenMeteoRiskData = async (): Promise<any> => {
 
     const riskAssessments = await Promise.all(
       locations.map(async (location) => {
-        const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=auto&past_days=7&forecast_days=7`
-        );
+          const response = await fetch(
+            `${import.meta.env.VITE_OPENMETEO_BASE_URL || 'https://api.open-meteo.com/v1/forecast'}?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=auto&past_days=7&forecast_days=7`
+          );
 
         if (!response.ok) {
           throw new Error(`Open-Meteo API error: ${response.status}`);
@@ -112,7 +112,7 @@ const fetchNASAFireData = async (): Promise<any> => {
   try {
     // Try a simpler NASA endpoint or use alternative
     const response = await fetch(
-      'https://firms.modaps.eosdis.nasa.gov/api/country/csv/viirs-snpp/USA/1',
+      `${import.meta.env.VITE_NASA_FIRMS_API_URL || 'https://firms.modaps.eosdis.nasa.gov/api/country/csv/viirs-snpp/USA/1'}`,
       {
         headers: {
           'User-Agent': 'EcoSphere-ClimateMonitoring/1.0'
@@ -141,7 +141,7 @@ const fetchUSGSDroughtData = async (): Promise<any> => {
   try {
     // Use USGS Water Services for a more reliable endpoint
     const response = await fetch(
-      'https://waterservices.usgs.gov/nwis/site/?format=json&sites=01646500&siteOutput=expanded'
+      `${import.meta.env.VITE_USGS_API_URL || 'https://waterservices.usgs.gov/nwis/site/?format=json&sites=01646500&siteOutput=expanded'}`
     );
 
     if (!response.ok) {
@@ -302,7 +302,7 @@ export const getTemperatureData = async (): Promise<any[]> => {
 
     // Fetch real temperature data from Open-Meteo
     const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${avgLat}&longitude=${avgLon}&hourly=temperature_2m&timezone=auto&past_days=1&forecast_days=1`
+      `${import.meta.env.VITE_OPENMETEO_BASE_URL || 'https://api.open-meteo.com/v1/forecast'}?latitude=${avgLat}&longitude=${avgLon}&hourly=temperature_2m&timezone=auto&past_days=1&forecast_days=1`
     );
 
     if (!response.ok) {
