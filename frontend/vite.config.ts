@@ -12,14 +12,20 @@ export default defineConfig({
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'src/components/Dashboard.tsx'),
+        insights: resolve(__dirname, 'src/components/ForestMonitor.tsx'),
+        climate: resolve(__dirname, 'src/components/ClimateAlerts.tsx'),
+        biodiversity: resolve(__dirname, 'src/components/BiodiversityTracker.tsx'),
+        pollution: resolve(__dirname, 'src/components/Pollution.tsx'),
+        ecoai: resolve(__dirname, 'src/components/EcoAI.tsx'),
+        sms: resolve(__dirname, 'src/components/SmsRegistration.tsx'),
+      },
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['recharts', 'lucide-react', 'react-icons'],
-          'auth-vendor': ['@clerk/clerk-react'],
-          'map-vendor': ['leaflet'],
-          'chat-vendor': ['@sendbird/chat', '@sendbird/uikit-react', 'sendbird'],
-          'ai-vendor': ['@google/generative-ai', 'axios']
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         },
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name?.split('.') || [];
