@@ -8,31 +8,33 @@ import BiodiversityTracker from './components/BiodiversityTracker';
 import ClimateAlerts from './components/ClimateAlerts';
 import EcoAI from './components/EcoAI';
 import Pollution from './components/Pollution';
-import ChatPage from './components/Chat/ChatPage';
+// import ChatPage from './components/Chat/ChatPage';
 import SmsRegistration from './components/SmsRegistration';
+import DebugInfo from './components/DebugInfo';
 
 // import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 
 function App() {
-  return (
-    <>
-
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/forest" element={<ForestMonitor />} />
-          <Route path="/biodiversity" element={<BiodiversityTracker />} />
-          <Route path="/climate" element={<ClimateAlerts />} />
-         <Route path="/pollution" element={<Pollution />} /> {/* Add this route */}
-          <Route path="/ecoai" element={<EcoAI />} />
-           <Route path="/SmsRegistration" element={<SmsRegistration />} />
-            {/* <Route path="/my-inbox" element={<ChatPage/>} /> */}
-        </Routes>
-      </Layout>
-    </Router>
-    </>
-  );
+	return (
+		<>
+			<Router>
+				<Layout>
+					<Routes>
+						<Route path='/' element={<Dashboard />} />
+						<Route path='/forest' element={<ForestMonitor />} />
+						<Route path='/biodiversity' element={<BiodiversityTracker />} />
+						<Route path='/climate' element={<ClimateAlerts />} />
+						<Route path='/pollution' element={<Pollution />} />{' '}
+						{/* Add this route */}
+						<Route path='/ecoai' element={<EcoAI />} />
+						<Route path='/SmsRegistration' element={<SmsRegistration />} />
+						{/* <Route path="/my-inbox" element={<ChatPage/>} /> */}
+					</Routes>
+				</Layout>
+			</Router>
+			<DebugInfo />
+		</>
+	);
 }
 
 export default App;
