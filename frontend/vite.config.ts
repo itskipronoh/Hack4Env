@@ -2,21 +2,17 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
-// https://vitejs.dev/config/
-// Better approach for SPA deployment
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: '/', // Make sure this is correct for your deployment
   build: {
     outDir: './dist',
     emptyOutDir: true,
     sourcemap: false,
     rollupOptions: {
-      // Keep standard HTML entry point
       input: resolve(__dirname, 'index.html'),
       output: {
         manualChunks: {
-          // Split by components for better caching
           'dashboard': ['./src/components/Dashboard.tsx'],
           'forest': ['./src/components/ForestMonitor.tsx'],
           'climate': ['./src/components/ClimateAlerts.tsx'],
@@ -28,5 +24,10 @@ export default defineConfig({
         }
       }
     }
+  },
+  // Add this for SPA routing support
+  preview: {
+    port: 5173,
+    host: true
   }
 });

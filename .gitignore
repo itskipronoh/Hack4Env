@@ -3,15 +3,11 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-env/
-venv/
-.env
 
 # Node
 node_modules/
 dist/
 build/
-.env
 *.log
 
 # MacOS
